@@ -1,0 +1,19 @@
+.ImageThumbContainer {
+    display: block;
+    overflow: hidden;
+    height: 0;
+    padding-top: 100%;
+    background-repeat: 'no-repeat';
+    border-radius: 4px;
+}
+
+.ThumbImg {
+    display: block;
+    /* Otherwise it keeps some space around baseline */
+    min-width: 100%;
+    /* Scale up to fill container width */
+    min-height: 100%;
+    /* Scale up to fill container height */
+    -ms-interpolation-mode: bicubic;
+    /* Scaled images look a bit better in IE now */
+}

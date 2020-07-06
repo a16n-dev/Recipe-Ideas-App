@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './SearchBar.css';
 import { Button, Grid, TextField } from '@material-ui/core';
-import { sizing } from '@material-ui/system';
 import { IUserInput } from '../../common/interface'
 
 interface ISearchBarProps {
@@ -52,7 +51,7 @@ function SearchBar(props: ISearchBarProps) {
                 <Grid item xs={12} sm={'auto'}>
                     <Button variant="contained" color="primary" onClick={handleSubmit}>
                         Submit
-                </Button>
+                    </Button>
                 </Grid>
             </Grid>
         </div>
