@@ -75,7 +75,7 @@ function RecipeCard(props: ICardProps) {
                             <Grid item container direction="row" justify="flex-end">
                                 <Grid item >
                                     <Button variant="contained" color="primary" onClick={() => { serveRecipe(props.Recipe.id) }}>
-                                        View Recipe <ExitToApp />
+                                        View Recipe &nbsp; <ExitToApp />
                                     </Button>
                                 </Grid>
                             </Grid>

@@ -18,7 +18,7 @@ function CardGrid(props: ICardGridProps) {
     const [AppStatus, setAppStatus] = useState<IStatus>({
         Msg: 'Enter an ingredient to get recipe suggestions...',
         Success: false,
-        TextDisplay: 'textPrimary'
+        TextDisplay: 'textSecondary'
     })
     useEffect(() => {
         setIsLoading(true)

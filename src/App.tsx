@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import './App.css';
 import { IUserInput } from './common/interface'
-import { createMuiTheme, MuiThemeProvider, CssBaseline } from '@material-ui/core';
+import { createMuiTheme, Box, MuiThemeProvider, CssBaseline, Typography } from '@material-ui/core';
 
 //components
 import SearchBar from './components/SearchBar/SearchBar'
 import CardGrid from './components/CardGrid/CardGrid'
+import AppTitleBar from './components/AppTitleBar/AppTitleBar'
 
 const theme = createMuiTheme({
   palette: {
     type: 'light',
+    primary: {
+      main: '#91c12f',
+    },
+    secondary: {
+      main: '#fcd734',
+    },
   },
   breakpoints: {
     values: {
@@ -35,7 +42,10 @@ function App() {
   return (
     <div className="App">
       <MuiThemeProvider theme={theme}>
-        <div className='headerText'>Enter an ingredient...</div>
+        <AppTitleBar />
+        <Box mt={6} mb={5}>
+          <Typography>Enter an ingredient to explore recipies:</Typography>
+        </Box>
         <SearchBar SetUserInput={(a: IUserInput) => SetUserInput(a)} />
         <CardGrid SearchQuery={UserInput.SearchQuery} />
         <CssBaseline />
