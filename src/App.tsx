@@ -44,7 +44,7 @@ function App() {
       <MuiThemeProvider theme={theme}>
         <AppTitleBar />
         <Box mt={6} mb={5}>
-          <Typography>Enter an ingredient to explore recipies:</Typography>
+          <Typography>Enter an ingredient to explore recipes:</Typography>
         </Box>
         <SearchBar SetUserInput={(a: IUserInput) => SetUserInput(a)} />
         <CardGrid SearchQuery={UserInput.SearchQuery} />

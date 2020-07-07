@@ -1,6 +1,7 @@
 import React from 'react';
 import './RecipeCard.css';
 import { Button, Grid, Typography, Card, CardContent } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { ExitToApp } from '@material-ui/icons';
 import { IRecipe } from '../../common/spoonacular_api_interface'
 import { IUrlCache } from '../../common/interface';
@@ -9,8 +10,24 @@ interface ICardProps {
     Recipe: IRecipe;
 }
 
-function RecipeCard(props: ICardProps) {
+const useStyles = makeStyles((theme) => ({
+    ImageThumbContainer: {
+        display: 'block',
+        overflow: 'hidden',
+        height: 0,
+        paddingTop: '100%',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        borderRadius: '4px',
+        [theme.breakpoints.only('xs')]: {
+            paddingTop: '40%',
+        },
+    },
+}));
 
+function RecipeCard(props: ICardProps) {
+    const classes = useStyles();
     const serveRecipe = (id: number) => {
 
         //fetch urls
@@ -50,8 +67,8 @@ function RecipeCard(props: ICardProps) {
             <Card raised>
                 <CardContent>
                     <Grid container spacing={2}>
-                        <Grid item xs={3} sm={5}>
-                            <div className='ImageThumbContainer' style={{
+                        <Grid item xs={12} sm={5}>
+                            <div className={classes.ImageThumbContainer} style={{
                                 backgroundImage: 'url(' + props.Recipe.image + ')'
                             }}>
                             </div>
