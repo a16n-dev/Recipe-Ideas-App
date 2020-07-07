@@ -1,6 +1,6 @@
 # Recipe Ideas App
 
-[https://alexn400.github.io/Recipe-Ideas-App/](Live here)
+[Live Here](https://alexn400.github.io/Recipe-Ideas-App/)
 
 **Created for phase 1 of the Microsoft Student Accelerator:**
 
