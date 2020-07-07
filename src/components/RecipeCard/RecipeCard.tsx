@@ -1,13 +1,48 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './RecipeCard.css';
 import { Button, Grid, Typography, Card, CardContent } from '@material-ui/core';
+import { ExitToApp } from '@material-ui/icons';
 import { IRecipe } from '../../common/spoonacular_api_interface'
+import { IUrlCache } from '../../common/interface';
 
 interface ICardProps {
     Recipe: IRecipe;
 }
 
 function RecipeCard(props: ICardProps) {
+
+    const serveRecipe = (id: number) => {
+
+        //fetch urls
+        let UrlCache: IUrlCache = (() => {
+            const dataString = localStorage.getItem('URLCache')
+            if (dataString) {
+                return JSON.parse(dataString)
+            } else {
+                return {};
+            }
+        })();
+
+        if (UrlCache[id]) {
+            window.open(UrlCache[id])
+        } else {
+            //fetch url from server and store
+            const key = process.env.REACT_APP_SPOONACULAR_API_KEY
+            const url = `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&apiKey=${key}`
+            fetch(url).then(function (response) {
+                if (response.status !== 200) { return };
+
+                response.json().then(function (data) {
+                    UrlCache[id] = data.sourceUrl
+                    localStorage.setItem('URLCache', JSON.stringify(UrlCache))
+                    window.open(data.sourceUrl)
+                });
+            }
+            ).catch(function (err) {
+                console.log('Fetch Error :-S', err);
+            });
+        }
+    }
 
     //render
     return (
@@ -32,19 +67,17 @@ function RecipeCard(props: ICardProps) {
                             xs
                         >
                             {/*Panel goes here */}
-                            <Grid item container xs justify="flex-start">
+                            <Grid item xs>
                                 {/*Title goes here */}
-                                <Grid item xs={12}>
-                                    <Typography variant="h5">{props.Recipe.title}</Typography>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Typography>Smaller title</Typography>
-                                </Grid>
+                                <Typography variant="h5" align='left'>{props.Recipe.title}</Typography>
+                                <Typography variant='subtitle1' align='left' color='textSecondary'>Extra ingredients: <b>{props.Recipe.missedIngredientCount}</b></Typography>
                             </Grid>
-                            <Grid item>
-                                <Button variant="contained" color="primary">
-                                    View Recipe (External link)
-                                </Button>
+                            <Grid item container direction="row" justify="flex-end">
+                                <Grid item >
+                                    <Button variant="contained" color="primary" onClick={() => { serveRecipe(props.Recipe.id) }}>
+                                        View Recipe <ExitToApp />
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>

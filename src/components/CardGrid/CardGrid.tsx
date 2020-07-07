@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './CardGrid.css';
-import { Grid, CircularProgress } from '@material-ui/core';
+import { Grid, CircularProgress, Typography } from '@material-ui/core';
 import RecipeCard from '../RecipeCard/RecipeCard'
 import { IStatus } from '../../common/interface'
 import { IRecipe } from '../../common/spoonacular_api_interface'
@@ -16,51 +16,18 @@ function CardGrid(props: ICardGridProps) {
     const [ItemArray, setItemArray] = useState<IRecipe[]>([])
     const [IsLoading, setIsLoading] = useState<Boolean>(false)
     const [AppStatus, setAppStatus] = useState<IStatus>({
-        Msg: 'Error (oops)',
+        Msg: 'Enter an ingredient to get recipe suggestions...',
         Success: false,
+        TextDisplay: 'textPrimary'
     })
     useEffect(() => {
         setIsLoading(true)
-        if (false) {
-            setItemArray([{
-                id: 1,
-                title: 'This is a test',
-                image: "/",
-                imageType: 'jpg',
-                usedIngredientCount: 3,
-                missedIngredientCount: 1,
-                likes: 5,
-            }, {
-                id: 2,
-                title: 'This is a test twoo',
-                image: "/",
-                imageType: 'jpg',
-                usedIngredientCount: 5,
-                missedIngredientCount: 1,
-                likes: 5,
-            }, {
-                id: 3,
-                title: 'woww another one',
-                image: "/",
-                imageType: 'jpg',
-                usedIngredientCount: 5,
-                missedIngredientCount: 1,
-                likes: 5,
-            }])
-            setAppStatus({
-                Msg: ``,
-                Success: true,
-            })
-            setIsLoading(false)
-            return
-        }
         if (!props.SearchQuery) {
             setIsLoading(false)
             return
         }
 
         const key = process.env.REACT_APP_SPOONACULAR_API_KEY;
-        const key2 = "yucky key"
         const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${props.SearchQuery}&number=6&apiKey=${key}`
         fetch(url)
             .then(
@@ -78,6 +45,7 @@ function CardGrid(props: ICardGridProps) {
                         setAppStatus({
                             Msg: `${msg} Status Code: ${response.status}`,
                             Success: false,
+                            TextDisplay: 'error'
                         })
                         setIsLoading(false)
                         return;
@@ -86,8 +54,9 @@ function CardGrid(props: ICardGridProps) {
                     // Examine the text in the response
                     response.json().then(function (data) {
                         setAppStatus({
-                            Msg: JSON.stringify(data),
-                            Success: true,
+                            Msg: "No results found",
+                            Success: (data.length > 0 ? true : false),
+                            TextDisplay: 'error',
                         })
                         setItemArray(data);
                         setIsLoading(false)
@@ -113,7 +82,6 @@ function CardGrid(props: ICardGridProps) {
         )
     })
 
-
     return (
         <div className="CardGridContainer">
             <Grid container direction="row" justify="center">
@@ -129,7 +97,7 @@ function CardGrid(props: ICardGridProps) {
                     lg={11}
                 >
                     {(AppStatus.Success && !IsLoading) && Cards}
-                    {(!AppStatus.Success && !IsLoading) && <div>{AppStatus.Msg}</div>}
+                    {(!AppStatus.Success && !IsLoading) && <Typography variant="subtitle1" color={AppStatus.TextDisplay}>{AppStatus.Msg}</Typography>}
                     {IsLoading && <CircularProgress />}
                 </Grid>
             </Grid>
