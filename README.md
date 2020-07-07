@@ -1,3 +1,11 @@
+# Recipe Ideas App
+
+[https://alexn400.github.io/Recipe-Ideas-App/](Live here)
+
+**Created for phase 1 of the Microsoft Student Accelerator:**
+
+_This app provides a simple interface for suggesting recipes to the user when prompted with one or more ingredients, using the spoonacular food API_
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
